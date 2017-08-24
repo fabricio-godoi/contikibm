@@ -42,7 +42,7 @@
  * @{
  */
 
-#define DEBUG_PRINTF(...) /*printf(__VA_ARGS__)*/
+#define DEBUG_PRINTF(...) printf(__VA_ARGS__)
 
 /*
  * uIP is a small implementation of the IP, UDP and TCP protocols (as
@@ -76,6 +76,8 @@
 #include "net/ip/uip_arch.h"
 
 #include "net/ipv4/uip-neighbor.h"
+
+#include "apps/benchmark/benchmark.h"
 
 #include <string.h>
 #include "sys/cc.h"

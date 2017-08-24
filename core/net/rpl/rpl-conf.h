@@ -42,7 +42,7 @@
 
 /* Set to 1 to enable RPL statistics */
 #ifndef RPL_CONF_STATS
-#define RPL_CONF_STATS 0
+#define RPL_CONF_STATS 1
 #endif /* RPL_CONF_STATS */
 
 /* 
@@ -67,7 +67,12 @@
 #define RPL_OF RPL_CONF_OF
 #else
 /* ETX is the default objective function. */
+#define OF_IS_MRHOF	0
+#if OF_IS_MRHOF == 1
 #define RPL_OF rpl_mrhof
+#else
+#define RPL_OF rpl_of0 // rpl_mrhof
+#endif
 #endif /* RPL_CONF_OF */
 
 /* This value decides which DAG instance we should participate in by default. */

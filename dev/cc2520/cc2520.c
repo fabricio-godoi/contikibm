@@ -42,6 +42,8 @@
 #include "net/rime/rimestats.h"
 #include "net/netstack.h"
 
+#include "apps/benchmark/benchmark.h"
+
 #include <string.h>
 
 #ifndef CC2520_CONF_AUTOACK
@@ -452,6 +454,7 @@ cc2520_transmit(unsigned short payload_len)
            we just started receiving a packet, so we drop the
            transmission. */
         RELEASE_LOCK();
+        NODESTAT_UPDATE(radiocol);
         return RADIO_TX_COLLISION;
       }
       if(receive_on) {
@@ -481,7 +484,7 @@ cc2520_transmit(unsigned short payload_len)
       }
 
       RELEASE_LOCK();
-
+      NODESTAT_UPDATE(radiotx);
       return RADIO_TX_OK;
     }
   }
@@ -497,9 +500,22 @@ cc2520_transmit(unsigned short payload_len)
   }
 
   RELEASE_LOCK();
+
+  NODESTAT_UPDATE(radiocol);
   return RADIO_TX_COLLISION;
 }
 /*---------------------------------------------------------------------------*/
+
+void packet_print(uint8_t *pkt, uint8_t len)
+{
+	while(len > 0)
+	{
+		len--;
+		PRINTF("%02X ", *pkt++);
+	}
+	PRINTF("\r\n");
+}
+
 static int
 cc2520_prepare(const void *payload, unsigned short payload_len)
 {
@@ -507,6 +523,11 @@ cc2520_prepare(const void *payload, unsigned short payload_len)
   GET_LOCK();
 
   PRINTF("cc2520: sending %d bytes\n", payload_len);
+  PRINTF("cc2520: ");
+#if DEBUG != 0
+  packet_print(payload, payload_len);
+#endif
+
   /*int i;
   for(i = 0; i < payload_len;i++)
 	  printf("%x",((uint8_t *) payload)[i]);
@@ -526,6 +547,8 @@ cc2520_prepare(const void *payload, unsigned short payload_len)
   RELEASE_LOCK();
   return 0;
 }
+
+
 /*---------------------------------------------------------------------------*/
 static int
 cc2520_send(const void *payload, unsigned short payload_len)
@@ -665,7 +688,7 @@ cc2520_interrupt(void)
   process_poll(&cc2520_process);
 
   last_packet_timestamp = cc2520_sfd_start_time;
-  cc2520_packets_seen++;
+//  cc2520_packets_seen++;
   return 1;
 }
 /*---------------------------------------------------------------------------*/
@@ -705,7 +728,7 @@ cc2520_read(void *buf, unsigned short bufsize)
 
   GET_LOCK();
 
-  cc2520_packets_read++;
+//  cc2520_packets_read++;
 
   getrxbyte(&len);
 
@@ -731,8 +754,8 @@ cc2520_read(void *buf, unsigned short bufsize)
     return 0;
   }
 
-  getrxdata(buf, len - FOOTER_LEN);
-  getrxdata(footer, FOOTER_LEN);
+  CC2520_READ_FIFO_BUF(buf, len - FOOTER_LEN);
+  CC2520_READ_FIFO_BUF(footer, FOOTER_LEN);
 
   if(footer[1] & FOOTER1_CRC_OK) {
     cc2520_last_rssi = footer[0];
@@ -767,6 +790,7 @@ cc2520_read(void *buf, unsigned short bufsize)
     return 0;
   }
 
+  NODESTAT_UPDATE(radiorx);
   return len - FOOTER_LEN;
 }
 /*---------------------------------------------------------------------------*/

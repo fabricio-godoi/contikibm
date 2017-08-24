@@ -125,6 +125,12 @@ static void packet_sent(void *ptr, int status, int num_transmissions);
 static void transmit_packet_list(void *ptr);
 
 /*---------------------------------------------------------------------------*/
+/*static struct csma_statistics *
+neighbor_queue_from_addr(void){
+
+}*/
+
+/*---------------------------------------------------------------------------*/
 static struct neighbor_queue *
 neighbor_queue_from_addr(const linkaddr_t *addr)
 {

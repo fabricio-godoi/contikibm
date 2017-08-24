@@ -317,3 +317,36 @@ rpl_init(void)
 /*---------------------------------------------------------------------------*/
 
 /** @}*/
+
+///*** Godoi Personal Code Here ***///
+
+void
+rpl_print_stats(void)
+{
+	PRINTF("=====================\n");
+	PRINTF("RPL Stats:\n");
+	PRINTF("mem_overflow: %d\n"
+			"local_repairs: %d\n"
+			"global_repairs: %d\n"
+			"malformed_msgs: %d\n"
+			"resets: %d\n"
+			"parent_switch: %d\n"
+			"forward_erros: %d\n"
+			"loop_errors: %d\n"
+			"loop_warnings: %d\n"
+			"root_repairs: %d\n",
+			rpl_stats.mem_overflows,
+			rpl_stats.local_repairs,
+			rpl_stats.global_repairs,
+			rpl_stats.malformed_msgs,
+			rpl_stats.resets,
+			rpl_stats.parent_switch,
+			rpl_stats.forward_errors,
+			rpl_stats.loop_errors,
+			rpl_stats.loop_warnings,
+			rpl_stats.root_repairs
+			);
+	PRINTF("=====================\n");
+}
+
+

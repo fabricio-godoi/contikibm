@@ -626,15 +626,15 @@ tcpip_ipv6_output(void)
       }
 #if TCPIP_CONF_ANNOTATE_TRANSMISSIONS
       if(nexthop != NULL) {
-        static uint8_t annotate_last;
-        static uint8_t annotate_has_last = 0;
+        static uint8_t annotate_last = -1; // save zero for the server
+        static uint8_t annotate_actual = 0;
+		annotate_actual = nexthop->u8[sizeof(uip_ipaddr_t) - 1];
 
-        if(annotate_has_last) {
+        if(annotate_actual != annotate_last) {
           printf("#L %u 0; red\n", annotate_last);
+          printf("#L %u 1; red\n", annotate_actual);
+          annotate_last = annotate_actual;
         }
-        printf("#L %u 1; red\n", nexthop->u8[sizeof(uip_ipaddr_t) - 1]);
-        annotate_last = nexthop->u8[sizeof(uip_ipaddr_t) - 1];
-        annotate_has_last = 1;
       }
 #endif /* TCPIP_CONF_ANNOTATE_TRANSMISSIONS */
     }

@@ -39,6 +39,9 @@
 #endif
 #include <stdio.h>
 #include <string.h>
+#include "platform/cooja/dev/cooja-radio.h"
+#include "dev/button-sensor.h"
+#include "examples/ipv6/rpl-udp/stats.h"
 
 #define UDP_CLIENT_PORT 8765
 #define UDP_SERVER_PORT 5678
@@ -49,16 +52,24 @@
 #include "net/ip/uip-debug.h"
 
 #ifndef PERIOD
-#define PERIOD 60
+#define PERIOD 1
 #endif
 
-#define START_INTERVAL		(15 * CLOCK_SECOND)
+#define START_INTERVAL		(PERIOD * CLOCK_SECOND)
 #define SEND_INTERVAL		(PERIOD * CLOCK_SECOND)
 #define SEND_TIME		(random_rand() % (SEND_INTERVAL))
 #define MAX_PAYLOAD_LEN		30
 
 static struct uip_udp_conn *client_conn;
 static uip_ipaddr_t server_ipaddr;
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+#ifndef TRUE
+#define TRUE 1
+#endif
+static char send_stop = FALSE;
 
 /*---------------------------------------------------------------------------*/
 PROCESS(udp_client_process, "UDP client process");
@@ -72,7 +83,10 @@ tcpip_handler(void)
   if(uip_newdata()) {
     str = uip_appdata;
     str[uip_datalen()] = '\0';
-    printf("DATA recv '%s'\n", str);
+//    if(!strcmp(str,"stats")){
+//    	send_stats();
+//    }
+//    printf("DATA recv '%s'\n", str);
   }
 }
 /*---------------------------------------------------------------------------*/
@@ -81,13 +95,15 @@ send_packet(void *ptr)
 {
   static int seq_id;
   char buf[MAX_PAYLOAD_LEN];
-
   seq_id++;
   PRINTF("DATA send to %d 'Hello %d'\n",
          server_ipaddr.u8[sizeof(server_ipaddr.u8) - 1], seq_id);
-  sprintf(buf, "Hello %d from the client", seq_id);
-  uip_udp_packet_sendto(client_conn, buf, strlen(buf),
-                        &server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
+
+  	  sprintf(buf, "Hello %d from the client", seq_id);
+
+	  uip_udp_packet_sendto(client_conn, buf, strlen(buf),
+							&server_ipaddr, UIP_HTONS(UDP_SERVER_PORT));
+
 }
 /*---------------------------------------------------------------------------*/
 static void
@@ -178,26 +194,44 @@ PROCESS_THREAD(udp_client_process, ev, data)
   powertrace_sniff(POWERTRACE_ON);
 #endif
 
+  SENSORS_ACTIVATE(button_sensor);
+
   etimer_set(&periodic, SEND_INTERVAL);
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {
       tcpip_handler();
+    } else if(ev == sensors_event && data == &button_sensor) {
+    	// Disable messages
+    	send_stop = TRUE;
+        etimer_stop(&periodic);
+
+        // If it's the first client, print the csv header
+        if(node_id == 1){ // First Client
+      	  printf("Printing Header\n");
+      	  print_network_stats_header();
+        }
+
+        // Print network stats
+    	print_network_stats();
+
     }
-    
-    if(etimer_expired(&periodic)) {
-      etimer_reset(&periodic);
-      ctimer_set(&backoff_timer, SEND_TIME, send_packet, NULL);
 
-#if WITH_COMPOWER
-      if (print == 0) {
-	powertrace_print("#P");
-      }
-      if (++print == 3) {
-	print = 0;
-      }
-#endif
+    // While it's to send data
+    if(!send_stop){
+		if(etimer_expired(&periodic)) {
+		  etimer_reset(&periodic);
+		  ctimer_set(&backoff_timer, SEND_TIME, send_packet, NULL);
 
+	#if WITH_COMPOWER
+		  if (print == 0) {
+		powertrace_print("#P");
+		  }
+		  if (++print == 3) {
+		print = 0;
+		  }
+	#endif
+		}
     }
   }
 

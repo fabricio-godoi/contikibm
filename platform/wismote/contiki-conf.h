@@ -6,7 +6,7 @@
 #include "platform-conf.h"
 
 #ifndef NETSTACK_CONF_MAC
-/* #define NETSTACK_CONF_MAC     csma_driver */
+//#define NETSTACK_CONF_MAC     csma_driver
 #define NETSTACK_CONF_MAC     nullmac_driver
 #endif /* NETSTACK_CONF_MAC */
 
@@ -32,6 +32,7 @@
 #endif /* CC2520_CONF_AUTOACK */
 
 #define NULLRDC_CONF_802154_AUTOACK      1
+//#define NULLRDC_CONF_SEND_802154_ACK 1 // ????
 
 #if NETSTACK_CONF_WITH_IPV6
 /* Network setup for IPv6 */
@@ -130,7 +131,7 @@
 
 /* configure number of neighbors and routes */
 #ifndef NBR_TABLE_CONF_MAX_NEIGHBORS
-#define NBR_TABLE_CONF_MAX_NEIGHBORS     30
+#define NBR_TABLE_CONF_MAX_NEIGHBORS     30 /// TODO check if this is making any improvement
 #endif /* NBR_TABLE_CONF_MAX_NEIGHBORS */
 #ifndef UIP_CONF_MAX_ROUTES
 #define UIP_CONF_MAX_ROUTES   30

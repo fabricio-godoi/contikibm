@@ -69,9 +69,11 @@
 #include "net/ipv6/sicslowpan.h"
 #include "net/netstack.h"
 
+#include "apps/benchmark/benchmark.h"
+
 #include <stdio.h>
 
-#define DEBUG DEBUG_NONE
+#define DEBUG 0
 #include "net/ip/uip-debug.h"
 #if DEBUG
 /* PRINTFI and PRINTFO are defined for input and output to debug one without changing the timing of the other */
@@ -1189,7 +1191,7 @@ static void
 uncompress_hdr_hc1(uint16_t ip_len)
 {
   /* version, traffic class, flow label */
-  SICSLOWPAN_IP_BUF->vtc = 0x60;
+  SICSLOWPAN_IP_BUF->vtc = 0x60;uncomp_hdr_len
   SICSLOWPAN_IP_BUF->tcflow = 0;
   SICSLOWPAN_IP_BUF->flow = 0;
   
@@ -1567,7 +1569,9 @@ output(const uip_lladdr_t *localdest)
      */
     memcpy(packetbuf_ptr + packetbuf_hdr_len, (uint8_t *)UIP_IP_BUF + uncomp_hdr_len,
            uip_len - uncomp_hdr_len);
+    PRINTFO("sicslowpan output: unfragmented payload size: %d\n",(uip_len - uncomp_hdr_len));
     packetbuf_set_datalen(uip_len - uncomp_hdr_len + packetbuf_hdr_len);
+    PRINTFO("sicslowpan output: unfragmented datalen: %d\n",(uip_len - uncomp_hdr_len + packetbuf_hdr_len));
     send_packet(&dest);
   }
   return 1;
@@ -1784,6 +1788,8 @@ input(void)
           "SICSLOWPAN: packet dropped, minimum required SICSLOWPAN_IP_BUF size: %d+%d+%d+%d=%d (current size: %d)\n",
           UIP_LLH_LEN, uncomp_hdr_len, (uint16_t)(frag_offset << 3),
           packetbuf_payload_len, req_size, sizeof(sicslowpan_buf));
+      /// XXX Godoi, buffer overflow check here
+      NODESTAT_UPDATE(overbuf);
       return;
     }
   }

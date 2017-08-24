@@ -46,9 +46,16 @@ AUTOSTART_PROCESSES(&hello_world_process);
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(hello_world_process, ev, data)
 {
+  static struct etimer timer; // event by timer
   PROCESS_BEGIN();
 
-  printf("Hello, world\n");
+  while(1){
+
+	  etimer_set(&timer, CLOCK_CONF_SECOND); // set event delay of 1s
+	  PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER); // hold the process until the time reaches 1s
+
+	  printf("Hello, world\n");
+  }
   
   PROCESS_END();
 }

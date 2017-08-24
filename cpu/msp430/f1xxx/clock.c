@@ -145,6 +145,7 @@ clock_fine(void)
   return (unsigned short) (TAR - t);
 }
 /*---------------------------------------------------------------------------*/
+volatile unsigned int interval, clock_second,rtimer_arch_second, clock_bcsctl1;
 void
 clock_init(void)
 {
@@ -158,9 +159,20 @@ clock_init(void)
 
   /* Select ACLK 32768Hz clock */
   /* TACTL = TASSEL0 | TACLR; */
-
+  clock_bcsctl1 = BCSCTL1;
+  interval = INTERVAL;
+  clock_second = CLOCK_SECOND;
+  rtimer_arch_second = RTIMER_ARCH_SECOND;
+  // ANOTACOES FABRICIO N GODOI
+// INTERVAL = 256
+// RTIMER_ARCH_SECOND = 32768
+// CLOCK_SECOND = 128
+//#define INTERVAL 256
+//#define RTIMER_ARCH_SECOND 32768
+//#define CLOCK_SECOND 128
 #if INTERVAL==32768/CLOCK_SECOND
-  TACTL = TASSEL0 | TACLR;
+  TACTL = TASSEL0 | TACLR; // ESTA E A CONFIGURACAO UTILIZADA
+  	  	  	  	  	  	   // ENTRETANTO O ACLK ESTA SENDO COM 16384 DEVIDO AO BCSCTL1 |= DIVA0;
 #elif INTERVAL==16384/CLOCK_SECOND
   TACTL = TASSEL0 | TACLR | ID_1;
 #else

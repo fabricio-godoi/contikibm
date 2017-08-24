@@ -34,11 +34,14 @@
 #include "net/rpl/rpl.h"
 
 #include "net/netstack.h"
+#include "net/rime/rimestats.h"
 #include "dev/button-sensor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "examples/ipv6/rpl-udp/stats.h"
+
 
 #define DEBUG DEBUG_PRINT
 #include "net/ip/uip-debug.h"
@@ -50,7 +53,10 @@
 
 #define UDP_EXAMPLE_ID  190
 
+//#define SERVER_REPLY 1
+
 static struct uip_udp_conn *server_conn;
+
 
 PROCESS(udp_server_process, "UDP server process");
 AUTOSTART_PROCESSES(&udp_server_process);
@@ -67,6 +73,7 @@ tcpip_handler(void)
     PRINTF("%d",
            UIP_IP_BUF->srcipaddr.u8[sizeof(UIP_IP_BUF->srcipaddr.u8) - 1]);
     PRINTF("\n");
+
 #if SERVER_REPLY
     PRINTF("DATA sending reply\n");
     uip_ipaddr_copy(&server_conn->ripaddr, &UIP_IP_BUF->srcipaddr);
@@ -107,7 +114,8 @@ PROCESS_THREAD(udp_server_process, ev, data)
 
   SENSORS_ACTIVATE(button_sensor);
 
-  PRINTF("UDP server started\n");
+  printf("UDP server started\n");
+  printf("%s\n",CONTIKI_TYPE);
 
 #if UIP_CONF_ROUTER
 /* The choice of server address determines its 6LoPAN header compression.
@@ -162,13 +170,17 @@ PROCESS_THREAD(udp_server_process, ev, data)
   PRINTF(" local/remote port %u/%u\n", UIP_HTONS(server_conn->lport),
          UIP_HTONS(server_conn->rport));
 
+
+  SENSORS_ACTIVATE(button_sensor);
   while(1) {
     PROCESS_YIELD();
     if(ev == tcpip_event) {
       tcpip_handler();
     } else if (ev == sensors_event && data == &button_sensor) {
-      PRINTF("Initiaing global repair\n");
-      rpl_repair_root(RPL_DEFAULT_INSTANCE);
+    	// Print network header
+    	print_network_stats();
+    	// Print network stats
+    	print_network_stats_foot();
     }
   }
 

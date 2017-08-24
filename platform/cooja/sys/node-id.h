@@ -32,8 +32,16 @@
 #ifndef NODE_ID_H_
 #define NODE_ID_H_
 
-#include "dev/moteid.h"
 
+#ifdef TARGET
+#if TARGET==cooja
+#include "dev/moteid.h"
 #define node_id simMoteID
+#endif
+
+#else
+extern unsigned short node_id;
+#endif
+
 
 #endif /* NODE_ID_H_ */

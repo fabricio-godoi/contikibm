@@ -79,6 +79,8 @@
 #include "net/ipv6/uip-ds6.h"
 #include "net/ipv6/multicast/uip-mcast6.h"
 
+#include "apps/benchmark/benchmark.h"
+
 #include <string.h>
 
 /*---------------------------------------------------------------------------*/
@@ -965,7 +967,7 @@ uip_process(uint8_t flag)
       goto tcp_send_syn;
 #endif /* UIP_ACTIVE_OPEN */
     }
-    goto drop;
+    goto drop; /// TODO not sure in which case this belongs
 #endif /* UIP_TCP */
     /* Check if we were invoked because of the perodic timer fireing. */
   } else if(flag == UIP_TIMER) {
@@ -1098,11 +1100,13 @@ uip_process(uint8_t flag)
   
   /* This is where the input processing starts. */
   UIP_STAT(++uip_stat.ip.recv);
-   
+  NODESTAT_UPDATE(rxed);
+
   /* Start of IP input header processing code. */
    
   /* Check validity of the IP header. */
   if((UIP_IP_BUF->vtc & 0xf0) != 0x60)  { /* IP version and header length. */
+	NODESTAT_UPDATE(dropped);
     UIP_STAT(++uip_stat.ip.drop);
     UIP_STAT(++uip_stat.ip.vhlerr);
     UIP_LOG("ipv6: invalid version.");
@@ -1132,6 +1136,7 @@ uip_process(uint8_t flag)
      */
   } else {
     UIP_LOG("ip: packet shorter than reported in IP header.");
+//    NODESTAT_UPDATE(corrupted);
     goto drop;
   }
   
@@ -1143,6 +1148,7 @@ uip_process(uint8_t flag)
 
   if(uip_is_addr_mcast(&UIP_IP_BUF->srcipaddr)){
     UIP_STAT(++uip_stat.ip.drop);
+    NODESTAT_UPDATE(dropped);
     PRINTF("Dropping packet, src is mcast\n");
     goto drop;
   }
@@ -1215,12 +1221,14 @@ uip_process(uint8_t flag)
       if(uip_len > UIP_LINK_MTU) {
         uip_icmp6_error_output(ICMP6_PACKET_TOO_BIG, 0, UIP_LINK_MTU);
         UIP_STAT(++uip_stat.ip.drop);
+        NODESTAT_UPDATE(dropped);
         goto send;
       }
       /* Check Hop Limit */
       if(UIP_IP_BUF->ttl <= 1) {
         uip_icmp6_error_output(ICMP6_TIME_EXCEEDED,
                                ICMP6_TIME_EXCEED_TRANSIT, 0);
+        NODESTAT_UPDATE(dropped);
         UIP_STAT(++uip_stat.ip.drop);
         goto send;
       }
@@ -1238,6 +1246,7 @@ uip_process(uint8_t flag)
       PRINT6ADDR(&UIP_IP_BUF->destipaddr);
       PRINTF("\n");
       UIP_STAT(++uip_stat.ip.forwarded);
+      NODESTAT_UPDATE(routed);
       goto send;
     } else {
       if((uip_is_addr_link_local(&UIP_IP_BUF->srcipaddr)) &&
@@ -1251,6 +1260,7 @@ uip_process(uint8_t flag)
         goto send;
       }
       PRINTF("Dropping packet, not for me and link local or multicast\n");
+      NODESTAT_UPDATE(dropped);
       UIP_STAT(++uip_stat.ip.drop);
       goto drop;
     }
@@ -1260,6 +1270,7 @@ uip_process(uint8_t flag)
      !uip_ds6_is_my_maddr(&UIP_IP_BUF->destipaddr) &&
      !uip_is_addr_mcast(&UIP_IP_BUF->destipaddr)) {
     PRINTF("Dropping packet, not for me\n");
+    NODESTAT_UPDATE(dropped);
     UIP_STAT(++uip_stat.ip.drop);
     goto drop;
   }
@@ -1367,6 +1378,7 @@ uip_process(uint8_t flag)
         PRINTF("Processing Routing header\n");
         if(UIP_ROUTING_BUF->seg_left > 0) {
           uip_icmp6_error_output(ICMP6_PARAM_PROB, ICMP6_PARAMPROB_HEADER, UIP_IPH_LEN + uip_ext_len + 2);
+          NODESTAT_UPDATE(dropped);
           UIP_STAT(++uip_stat.ip.drop);
           UIP_LOG("ip6: unrecognized routing type");
           goto send;
@@ -1394,6 +1406,7 @@ uip_process(uint8_t flag)
         uip_next_hdr = &UIP_IP_BUF->proto;
         break;
 #else /* UIP_CONF_IPV6_REASSEMBLY */
+        NODESTAT_UPDATE(dropped);
         UIP_STAT(++uip_stat.ip.drop);
         UIP_STAT(++uip_stat.ip.fragerr);
         UIP_LOG("ip: fragment dropped.");
@@ -1411,6 +1424,7 @@ uip_process(uint8_t flag)
    * next header, pointing to the next header field
    */
   uip_icmp6_error_output(ICMP6_PARAM_PROB, ICMP6_PARAMPROB_NEXTHEADER, (uint32_t)(uip_next_hdr - (uint8_t *)UIP_IP_BUF));
+  NODESTAT_UPDATE(dropped);
   UIP_STAT(++uip_stat.ip.drop);
   UIP_STAT(++uip_stat.ip.protoerr);
   UIP_LOG("ip6: unrecognized header");
@@ -1526,6 +1540,7 @@ uip_process(uint8_t flag)
   }
   PRINTF("udp: no matching connection found\n");
   UIP_STAT(++uip_stat.udp.drop);
+  NODESTAT_UPDATE(dropped);
 
 #if UIP_UDP_SEND_UNREACH_NOPORT
   uip_icmp6_error_output(ICMP6_DST_UNREACH, ICMP6_DST_UNREACH_NOPORT, 0);
@@ -2305,6 +2320,7 @@ uip_process(uint8_t flag)
          (UIP_IP_BUF->len[0] << 8) | UIP_IP_BUF->len[1]);
   
   UIP_STAT(++uip_stat.ip.sent);
+  NODESTAT_UPDATE(txed);
   /* Return and let the caller do the actual transmission. */
   uip_flags = 0;
   return;
@@ -2355,3 +2371,27 @@ uip_send(const void *data, int len)
 }
 /*---------------------------------------------------------------------------*/
 /** @} */
+
+
+
+///*** Godoi Personal Code Here ***///
+
+void
+uip_print_stats_udp(void)
+{
+	PRINTF("=====================\n");
+	PRINTF("uIP Stats:\n");
+	PRINTF("dropped: %d\n"
+			"received: %d\n"
+			"sent: %d\n"
+			"checksum: %d\n",
+			uip_stat.udp.drop,
+			uip_stat.udp.recv,
+			uip_stat.udp.sent,
+			uip_stat.udp.chkerr
+			);
+	PRINTF("=====================\n");
+}
+
+
+

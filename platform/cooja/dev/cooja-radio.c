@@ -30,7 +30,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
 #include "contiki.h"
 
 #include "sys/cooja_mt.h"
@@ -317,3 +316,4 @@ const struct radio_driver cooja_radio_driver =
 SIM_INTERFACE(radio_interface,
 	      doInterfaceActionsBeforeTick,
 	      doInterfaceActionsAfterTick);
+

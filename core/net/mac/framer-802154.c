@@ -188,6 +188,7 @@ create_frame(int type, int do_create)
   params.payload = packetbuf_dataptr();
   params.payload_len = packetbuf_datalen();
   hdr_len = frame802154_hdrlen(&params);
+  PRINTF("framer: header length = %d\n",hdr_len);
   if(!do_create) {
     /* Only calculate header length */
     return hdr_len;

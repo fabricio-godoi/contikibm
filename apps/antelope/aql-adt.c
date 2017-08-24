@@ -41,7 +41,7 @@
 
 #include "aql.h"
 
-#define DEBUG   DEBUG_NONE
+#define DEBUG   DEBUG_ANNOTATE
 #include "net/ip/uip-debug.h"
 
 static unsigned char char_buf[DB_MAX_CHAR_SIZE_PER_ROW];

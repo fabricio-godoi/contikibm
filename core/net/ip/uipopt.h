@@ -184,7 +184,7 @@
  * \hideinitializer
  */
 #ifndef UIP_CONF_STATISTICS
-#define UIP_STATISTICS  0
+#define UIP_STATISTICS  1
 #else /* UIP_CONF_STATISTICS */
 #define UIP_STATISTICS (UIP_CONF_STATISTICS)
 #endif /* UIP_CONF_STATISTICS */

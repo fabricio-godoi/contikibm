@@ -540,7 +540,18 @@ uip_ds6_defrt_add(uip_ipaddr_t *ipaddr, unsigned long interval)
     d->isinfinite = 1;
   }
 
-  ANNOTATE("#L %u 1\n", ipaddr->u8[sizeof(uip_ipaddr_t) - 1]);
+#if DS6_ANNOTATE_DEFAULT_ROUTE == 1
+  static uint8_t annotate_last = -1; // save zero for the server
+  static uint8_t annotate_actual = 0;
+  annotate_actual = ipaddr->u8[sizeof(uip_ipaddr_t) - 1];
+
+  if(annotate_actual != annotate_last) {
+    if(annotate_last != -1) printf("#L %u 0; red\n", annotate_last);
+    if(annotate_actual != -1) printf("#L %u 1; red\n", annotate_actual);
+    annotate_last = annotate_actual;
+  }
+#endif
+//  ANNOTATE("#L %u 1\n", ipaddr->u8[sizeof(uip_ipaddr_t) - 1]);
 
 #if UIP_DS6_NOTIFICATIONS
   call_route_callback(UIP_DS6_NOTIFICATION_DEFRT_ADD, ipaddr, ipaddr);

@@ -1,4 +1,6 @@
 all: udp-client udp-server
+PROJECT_SOURCEFILES += stats.c
+#SOURCEDIRS += ../dev
 APPS=servreg-hack
 CONTIKI=../../..
 

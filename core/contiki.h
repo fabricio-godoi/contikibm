@@ -55,4 +55,37 @@
 
 #include "sys/energest.h"
 
+
+/// Configuration for tests
+/// Author: Fabricio N. de Godoi
+#ifndef CONTIKI_CONFIGURATION_TEST
+#define CONTIKI_CONFIGURATION_TEST
+
+#ifndef ENABLED
+#define ENABLED 1
+#endif
+#ifndef DISABLED
+#define DISABLED 0
+#endif
+
+//*** Configuration for development tests, options
+#define CONTIKI_FWD_CHK 	ENABLED
+#define CONTIKI_FINBUFF		DISABLED
+
+/// String with name of test running
+#if (CONTIKI_FWD_CHK!=ENABLED && CONTIKI_FINBUFF!=ENABLED)
+#define CONTIKI_TYPE "DEFAULT"
+#elif (CONTIKI_FWD_CHK==ENABLED && CONTIKI_FINBUFF!=ENABLED)
+#define CONTIKI_TYPE "FORWARD"
+#elif (CONTIKI_FWD_CHK!=ENABLED && CONTIKI_FINBUFF==ENABLED)
+#define CONTIKI_TYPE "BUFFER"
+#elif (CONTIKI_FWD_CHK==ENABLED && CONTIKI_FINBUFF==ENABLED)
+#define CONTIKI_TYPE "FWD_BUFF"
+#else
+#define CONTIKI_TYPE "NONE"
+#endif
+
+#endif //!CONTIKI_CONFIGURATION_TEST
+
+
 #endif /* CONTIKI_H_ */

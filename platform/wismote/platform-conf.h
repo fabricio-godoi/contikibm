@@ -58,6 +58,9 @@
 #define HAVE_STDINT_H
 #include "msp430def.h"
 
+/** Fabricio: DRAW COMMUNICATION **/
+#define DS6_ANNOTATE_DEFAULT_ROUTE 1
+#define TCPIP_CONF_ANNOTATE_TRANSMISSIONS 0
 
 /* Types for clocks and uip_stats */
 typedef unsigned short uip_stats_t;

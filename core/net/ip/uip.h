@@ -2227,6 +2227,10 @@ uint16_t uip_udpchksum(void);
 uint16_t uip_icmp6chksum(void);
 
 
+/*** Godoi Personal Code ***/
+void uip_print_stats_udp(void);
+
+
 #endif /* UIP_H_ */
 
 

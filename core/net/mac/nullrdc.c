@@ -170,6 +170,8 @@ send_one_packet(mac_callback_t sent, void *ptr)
             int len;
             uint8_t ackbuf[ACK_LEN];
 
+
+            //// Cooja will not enter here by default
             if(AFTER_ACK_DETECTED_WAIT_TIME > 0) {
               wt = RTIMER_NOW();
               watchdog_periodic();

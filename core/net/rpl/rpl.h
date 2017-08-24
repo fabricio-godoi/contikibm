@@ -257,6 +257,9 @@ void rpl_dag_init(void);
 uip_ds6_nbr_t *rpl_get_nbr(rpl_parent_t *parent);
 void rpl_print_neighbor_list();
 
+/// Godoi Functions
+void rpl_print_stats(void);
+
 /* Per-parent RPL information */
 NBR_TABLE_DECLARE(rpl_parents);
 

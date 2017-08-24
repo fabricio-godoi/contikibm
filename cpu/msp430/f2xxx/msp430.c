@@ -156,6 +156,7 @@ extern int _end;		/* Not in sys/unistd.h */
 static char *cur_break = (char *)&_end;
 #endif
 
+volatile int dcoctl, bcsctl1, bcsctl2, bcsctl3;
 void
 msp430_cpu_init(void)
 {
@@ -166,6 +167,10 @@ msp430_cpu_init(void)
   msp430_init_dco();
   /* calibrate the DCO step-by-step */ 
   msp430_sync_dco();
+
+  bcsctl1 = BCSCTL1;
+  bcsctl2 = BCSCTL2;
+  bcsctl3 = BCSCTL3;
   eint();
 #if defined(__MSP430__) && defined(__GNUC__)
   if((uintptr_t)cur_break & 1) { /* Workaround for msp430-ld bug! */

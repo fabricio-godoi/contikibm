@@ -346,10 +346,10 @@ main(int argc, char **argv)
          RF_CHANNEL);
 #endif /* NETSTACK_CONF_WITH_IPV6 */
 
-#if !NETSTACK_CONF_WITH_IPV4 && !NETSTACK_CONF_WITH_IPV6
+//#if !NETSTACK_CONF_WITH_IPV4 && !NETSTACK_CONF_WITH_IPV6
   uart1_set_input(serial_line_input_byte);
   serial_line_init();
-#endif
+//#endif
 
   leds_off(LEDS_GREEN);
 

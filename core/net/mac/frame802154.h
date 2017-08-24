@@ -140,14 +140,14 @@ typedef struct {
   uint8_t dest_addr_mode;    /**< 2 bit. Destination address mode, see 802.15.4 */
   uint8_t frame_version;     /**< 2 bit. 802.15.4 frame version */
   uint8_t src_addr_mode;     /**< 2 bit. Source address mode, see 802.15.4 */
-} frame802154_fcf_t;
+} frame802154_fcf_t;		 /**< 16 bits. */
 
 /** \brief 802.15.4 security control bitfield.  See section 7.6.2.2.1 in 802.15.4 specification */
 typedef struct {
   uint8_t  security_level; /**< 3 bit. security level      */
   uint8_t  key_id_mode;    /**< 2 bit. Key identifier mode */
   uint8_t  reserved;       /**< 3 bit. Reserved bits       */
-} frame802154_scf_t;
+} frame802154_scf_t;	   /**< 8 bits. */
 
 typedef union {
   uint32_t u32;

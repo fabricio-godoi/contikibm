@@ -790,6 +790,7 @@ qsend_packet(mac_callback_t sent, void *ptr)
 {
   int ret = send_packet(sent, ptr, NULL, 0);
   if(ret != MAC_TX_DEFERRED) {
+	  PRINTF("qsend_packet");
     mac_call_sent_callback(sent, ptr, ret, 1);
   }
 }
@@ -810,6 +811,7 @@ qsend_list(mac_callback_t sent, void *ptr, struct rdc_buf_list *buf_list)
     /* Prepare the packetbuf for callback */
     queuebuf_to_packetbuf(buf_list->buf);
     /* Return COLLISION so the MAC may try again later */
+	  PRINTF("qsend_list");
     mac_call_sent_callback(sent, ptr, MAC_TX_COLLISION, 1);
     return;
   }
