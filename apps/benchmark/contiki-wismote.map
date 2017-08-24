@@ -54,8 +54,7 @@ contiki-wismote.a(rpl-ext-header.)
                               contiki-wismote.a(uip6.o) (rpl_verify_header)
 contiki-wismote.a(rpl-icmp6.o)
                               contiki-wismote.a(rpl.o) (dao_output_target)
-contiki-wismote.a(rpl-mrhof.o)
-                              contiki-wismote.a(rpl.o) (rpl_mrhof)
+contiki-wismote.a(rpl-of0.o)  contiki-wismote.a(rpl.o) (rpl_of0)
 contiki-wismote.a(rpl-timers.o)
                               contiki-wismote.a(rpl.o) (rpl_reset_periodic_timer)
 contiki-wismote.a(linkaddr.o)
@@ -497,9 +496,9 @@ Discarded input sections
  .text          0x00000000        0x0 contiki-wismote.a(rpl-icmp6.o)
  .data          0x00000000        0x0 contiki-wismote.a(rpl-icmp6.o)
  .bss           0x00000000        0x0 contiki-wismote.a(rpl-icmp6.o)
- .text          0x00000000        0x0 contiki-wismote.a(rpl-mrhof.o)
- .data          0x00000000        0x0 contiki-wismote.a(rpl-mrhof.o)
- .bss           0x00000000        0x0 contiki-wismote.a(rpl-mrhof.o)
+ .text          0x00000000        0x0 contiki-wismote.a(rpl-of0.o)
+ .data          0x00000000        0x0 contiki-wismote.a(rpl-of0.o)
+ .bss           0x00000000        0x0 contiki-wismote.a(rpl-of0.o)
  .text          0x00000000        0x0 contiki-wismote.a(rpl-timers.o)
  .data          0x00000000        0x0 contiki-wismote.a(rpl-timers.o)
  .bss           0x00000000        0x0 contiki-wismote.a(rpl-timers.o)
@@ -1369,7 +1368,7 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
 .rela.plt
  *(.rela.plt)
 
-.text           0x00005c00     0x9f2a
+.text           0x00005c00     0x9f10
                 0x00005c00                . = ALIGN (0x2)
  *(.init .init.*)
  *(.init0)
@@ -2229,316 +2228,318 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
                 0x0000e8da       0x22 contiki-wismote.a(rpl-icmp6.o)
                 0x0000e8da                rpl_icmp6_register_handlers
  .any.text.reset
-                0x0000e8fc        0x2 contiki-wismote.a(rpl-mrhof.o)
- .any.text.update_metric_container
-                0x0000e8fe        0x6 contiki-wismote.a(rpl-mrhof.o)
+                0x0000e8fc        0x2 contiki-wismote.a(rpl-of0.o)
  .any.text.calculate_rank
-                0x0000e904       0x3e contiki-wismote.a(rpl-mrhof.o)
- .any.text.neighbor_link_callback
-                0x0000e942       0x82 contiki-wismote.a(rpl-mrhof.o)
- .any.text.best_dag
-                0x0000e9c4       0x2e contiki-wismote.a(rpl-mrhof.o)
+                0x0000e8fe       0x2e contiki-wismote.a(rpl-of0.o)
+ .any.text.update_metric_container
+                0x0000e92c        0x6 contiki-wismote.a(rpl-of0.o)
  .any.text.best_parent
-                0x0000e9f2       0x68 contiki-wismote.a(rpl-mrhof.o)
+                0x0000e932       0x72 contiki-wismote.a(rpl-of0.o)
+ .any.text.best_dag
+                0x0000e9a4       0x32 contiki-wismote.a(rpl-of0.o)
  .any.text.new_dio_interval
-                0x0000ea5a       0xaa contiki-wismote.a(rpl-timers.o)
+                0x0000e9d6       0xaa contiki-wismote.a(rpl-timers.o)
  .any.text.set_dao_lifetime_timer
-                0x0000eb04       0x66 contiki-wismote.a(rpl-timers.o)
+                0x0000ea80       0x66 contiki-wismote.a(rpl-timers.o)
  .any.text.handle_periodic_timer
-                0x0000eb6a       0x2e contiki-wismote.a(rpl-timers.o)
+                0x0000eae6       0x2e contiki-wismote.a(rpl-timers.o)
  .any.text.schedule_dao
-                0x0000eb98       0x72 contiki-wismote.a(rpl-timers.o)
+                0x0000eb14       0x72 contiki-wismote.a(rpl-timers.o)
  .any.text.handle_dio_timer
-                0x0000ec0a       0x8c contiki-wismote.a(rpl-timers.o)
+                0x0000eb86       0x8c contiki-wismote.a(rpl-timers.o)
  .any.text.handle_dao_timer
-                0x0000ec96       0x64 contiki-wismote.a(rpl-timers.o)
+                0x0000ec12       0x64 contiki-wismote.a(rpl-timers.o)
  .any.text.rpl_reset_periodic_timer
-                0x0000ecfa       0x46 contiki-wismote.a(rpl-timers.o)
-                0x0000ecfa                rpl_reset_periodic_timer
+                0x0000ec76       0x46 contiki-wismote.a(rpl-timers.o)
+                0x0000ec76                rpl_reset_periodic_timer
  .any.text.rpl_reset_dio_timer
-                0x0000ed40       0x1c contiki-wismote.a(rpl-timers.o)
-                0x0000ed40                rpl_reset_dio_timer
+                0x0000ecbc       0x1c contiki-wismote.a(rpl-timers.o)
+                0x0000ecbc                rpl_reset_dio_timer
  .any.text.rpl_schedule_dao
-                0x0000ed5c        0xc contiki-wismote.a(rpl-timers.o)
-                0x0000ed5c                rpl_schedule_dao
+                0x0000ecd8        0xc contiki-wismote.a(rpl-timers.o)
+                0x0000ecd8                rpl_schedule_dao
  .any.text.rpl_schedule_probing
-                0x0000ed68       0x5c contiki-wismote.a(rpl-timers.o)
-                0x0000ed68                rpl_schedule_probing
+                0x0000ece4       0x5c contiki-wismote.a(rpl-timers.o)
+                0x0000ece4                rpl_schedule_probing
  .any.text.handle_probing_timer
-                0x0000edc4      0x112 contiki-wismote.a(rpl-timers.o)
+                0x0000ed40      0x112 contiki-wismote.a(rpl-timers.o)
  .any.text.linkaddr_copy
-                0x0000eed6        0x8 contiki-wismote.a(linkaddr.o)
-                0x0000eed6                linkaddr_copy
+                0x0000ee52        0x8 contiki-wismote.a(linkaddr.o)
+                0x0000ee52                linkaddr_copy
  .any.text.linkaddr_cmp
-                0x0000eede       0x12 contiki-wismote.a(linkaddr.o)
-                0x0000eede                linkaddr_cmp
+                0x0000ee5a       0x12 contiki-wismote.a(linkaddr.o)
+                0x0000ee5a                linkaddr_cmp
  .any.text.linkaddr_set_node_addr
-                0x0000eef0        0xc contiki-wismote.a(linkaddr.o)
-                0x0000eef0                linkaddr_set_node_addr
+                0x0000ee6c        0xc contiki-wismote.a(linkaddr.o)
+                0x0000ee6c                linkaddr_set_node_addr
  .any.text.item_from_index
-                0x0000eefc       0x2a contiki-wismote.a(nbr-table.o)
+                0x0000ee78       0x2a contiki-wismote.a(nbr-table.o)
  .any.text.index_from_key
-                0x0000ef26       0x26 contiki-wismote.a(nbr-table.o)
+                0x0000eea2       0x26 contiki-wismote.a(nbr-table.o)
  .any.text.index_from_item
-                0x0000ef4c       0x1e contiki-wismote.a(nbr-table.o)
+                0x0000eec8       0x1e contiki-wismote.a(nbr-table.o)
  .any.text.nbr_set_bit
-                0x0000ef6a       0x50 contiki-wismote.a(nbr-table.o)
+                0x0000eee6       0x50 contiki-wismote.a(nbr-table.o)
  .any.text.index_from_lladdr
-                0x0000efba       0x3e contiki-wismote.a(nbr-table.o)
+                0x0000ef36       0x3e contiki-wismote.a(nbr-table.o)
  .any.text.nbr_get_bit.constprop.0
-                0x0000eff8       0x2c contiki-wismote.a(nbr-table.o)
+                0x0000ef74       0x2c contiki-wismote.a(nbr-table.o)
  .any.text.nbr_table_register
-                0x0000f024       0x26 contiki-wismote.a(nbr-table.o)
-                0x0000f024                nbr_table_register
+                0x0000efa0       0x26 contiki-wismote.a(nbr-table.o)
+                0x0000efa0                nbr_table_register
  .any.text.nbr_table_next
-                0x0000f04a       0x4c contiki-wismote.a(nbr-table.o)
-                0x0000f04a                nbr_table_next
+                0x0000efc6       0x4c contiki-wismote.a(nbr-table.o)
+                0x0000efc6                nbr_table_next
  .any.text.nbr_table_head
-                0x0000f096       0x36 contiki-wismote.a(nbr-table.o)
-                0x0000f096                nbr_table_head
+                0x0000f012       0x36 contiki-wismote.a(nbr-table.o)
+                0x0000f012                nbr_table_head
  .any.text.nbr_table_add_lladdr
-                0x0000f0cc      0x110 contiki-wismote.a(nbr-table.o)
-                0x0000f0cc                nbr_table_add_lladdr
+                0x0000f048      0x110 contiki-wismote.a(nbr-table.o)
+                0x0000f048                nbr_table_add_lladdr
  .any.text.nbr_table_get_from_lladdr
-                0x0000f1dc       0x28 contiki-wismote.a(nbr-table.o)
-                0x0000f1dc                nbr_table_get_from_lladdr
+                0x0000f158       0x28 contiki-wismote.a(nbr-table.o)
+                0x0000f158                nbr_table_get_from_lladdr
  .any.text.nbr_table_remove
-                0x0000f204       0x2a contiki-wismote.a(nbr-table.o)
-                0x0000f204                nbr_table_remove
+                0x0000f180       0x2a contiki-wismote.a(nbr-table.o)
+                0x0000f180                nbr_table_remove
  .any.text.nbr_table_lock
-                0x0000f22e       0x10 contiki-wismote.a(nbr-table.o)
-                0x0000f22e                nbr_table_lock
+                0x0000f1aa       0x10 contiki-wismote.a(nbr-table.o)
+                0x0000f1aa                nbr_table_lock
  .any.text.nbr_table_unlock
-                0x0000f23e       0x10 contiki-wismote.a(nbr-table.o)
-                0x0000f23e                nbr_table_unlock
+                0x0000f1ba       0x10 contiki-wismote.a(nbr-table.o)
+                0x0000f1ba                nbr_table_unlock
  .any.text.nbr_table_get_lladdr
-                0x0000f24e       0x20 contiki-wismote.a(nbr-table.o)
-                0x0000f24e                nbr_table_get_lladdr
+                0x0000f1ca       0x20 contiki-wismote.a(nbr-table.o)
+                0x0000f1ca                nbr_table_get_lladdr
  .any.text.packetbuf_compact
-                0x0000f26e       0x2e contiki-wismote.a(packetbuf.o)
-                0x0000f26e                packetbuf_compact
+                0x0000f1ea       0x2e contiki-wismote.a(packetbuf.o)
+                0x0000f1ea                packetbuf_compact
  .any.text.packetbuf_copyto
-                0x0000f29c       0x46 contiki-wismote.a(packetbuf.o)
-                0x0000f29c                packetbuf_copyto
+                0x0000f218       0x46 contiki-wismote.a(packetbuf.o)
+                0x0000f218                packetbuf_copyto
  .any.text.packetbuf_hdrreduce
-                0x0000f2e2       0x1a contiki-wismote.a(packetbuf.o)
-                0x0000f2e2                packetbuf_hdrreduce
+                0x0000f25e       0x1a contiki-wismote.a(packetbuf.o)
+                0x0000f25e                packetbuf_hdrreduce
  .any.text.packetbuf_set_datalen
-                0x0000f2fc        0x6 contiki-wismote.a(packetbuf.o)
-                0x0000f2fc                packetbuf_set_datalen
+                0x0000f278        0x6 contiki-wismote.a(packetbuf.o)
+                0x0000f278                packetbuf_set_datalen
  .any.text.packetbuf_dataptr
-                0x0000f302        0xe contiki-wismote.a(packetbuf.o)
-                0x0000f302                packetbuf_dataptr
+                0x0000f27e        0xe contiki-wismote.a(packetbuf.o)
+                0x0000f27e                packetbuf_dataptr
  .any.text.packetbuf_hdrptr
-                0x0000f310        0xa contiki-wismote.a(packetbuf.o)
-                0x0000f310                packetbuf_hdrptr
+                0x0000f28c        0xa contiki-wismote.a(packetbuf.o)
+                0x0000f28c                packetbuf_hdrptr
  .any.text.packetbuf_datalen
-                0x0000f31a        0x6 contiki-wismote.a(packetbuf.o)
-                0x0000f31a                packetbuf_datalen
+                0x0000f296        0x6 contiki-wismote.a(packetbuf.o)
+                0x0000f296                packetbuf_datalen
  .any.text.packetbuf_hdrlen
-                0x0000f320       0x10 contiki-wismote.a(packetbuf.o)
-                0x0000f320                packetbuf_hdrlen
+                0x0000f29c       0x10 contiki-wismote.a(packetbuf.o)
+                0x0000f29c                packetbuf_hdrlen
  .any.text.packetbuf_totlen
-                0x0000f330        0xc contiki-wismote.a(packetbuf.o)
-                0x0000f330                packetbuf_totlen
+                0x0000f2ac        0xc contiki-wismote.a(packetbuf.o)
+                0x0000f2ac                packetbuf_totlen
  .any.text.packetbuf_hdralloc
-                0x0000f33c       0x2a contiki-wismote.a(packetbuf.o)
-                0x0000f33c                packetbuf_hdralloc
+                0x0000f2b8       0x2a contiki-wismote.a(packetbuf.o)
+                0x0000f2b8                packetbuf_hdralloc
  .any.text.packetbuf_attr_clear
-                0x0000f366       0x28 contiki-wismote.a(packetbuf.o)
-                0x0000f366                packetbuf_attr_clear
+                0x0000f2e2       0x28 contiki-wismote.a(packetbuf.o)
+                0x0000f2e2                packetbuf_attr_clear
  .any.text.packetbuf_clear
-                0x0000f38e       0x1a contiki-wismote.a(packetbuf.o)
-                0x0000f38e                packetbuf_clear
+                0x0000f30a       0x1a contiki-wismote.a(packetbuf.o)
+                0x0000f30a                packetbuf_clear
  .any.text.packetbuf_copyfrom
-                0x0000f3a8       0x2a contiki-wismote.a(packetbuf.o)
-                0x0000f3a8                packetbuf_copyfrom
+                0x0000f324       0x2a contiki-wismote.a(packetbuf.o)
+                0x0000f324                packetbuf_copyfrom
  .any.text.packetbuf_attr_copyto
-                0x0000f3d2       0x22 contiki-wismote.a(packetbuf.o)
-                0x0000f3d2                packetbuf_attr_copyto
+                0x0000f34e       0x22 contiki-wismote.a(packetbuf.o)
+                0x0000f34e                packetbuf_attr_copyto
  .any.text.packetbuf_attr_copyfrom
-                0x0000f3f4       0x24 contiki-wismote.a(packetbuf.o)
-                0x0000f3f4                packetbuf_attr_copyfrom
+                0x0000f370       0x24 contiki-wismote.a(packetbuf.o)
+                0x0000f370                packetbuf_attr_copyfrom
  .any.text.packetbuf_holds_broadcast
-                0x0000f418        0xe contiki-wismote.a(packetbuf.o)
-                0x0000f418                packetbuf_holds_broadcast
+                0x0000f394        0xe contiki-wismote.a(packetbuf.o)
+                0x0000f394                packetbuf_holds_broadcast
  .any.text.queuebuf_init
-                0x0000f426       0x12 contiki-wismote.a(queuebuf.o)
-                0x0000f426                queuebuf_init
+                0x0000f3a2       0x12 contiki-wismote.a(queuebuf.o)
+                0x0000f3a2                queuebuf_init
  .any.text.queuebuf_numfree
-                0x0000f438        0xa contiki-wismote.a(queuebuf.o)
-                0x0000f438                queuebuf_numfree
+                0x0000f3b4        0xa contiki-wismote.a(queuebuf.o)
+                0x0000f3b4                queuebuf_numfree
  .any.text.queuebuf_new_from_packetbuf
-                0x0000f442       0x4e contiki-wismote.a(queuebuf.o)
-                0x0000f442                queuebuf_new_from_packetbuf
+                0x0000f3be       0x4e contiki-wismote.a(queuebuf.o)
+                0x0000f3be                queuebuf_new_from_packetbuf
  .any.text.queuebuf_free
-                0x0000f490       0x2a contiki-wismote.a(queuebuf.o)
-                0x0000f490                queuebuf_free
+                0x0000f40c       0x2a contiki-wismote.a(queuebuf.o)
+                0x0000f40c                queuebuf_free
  .any.text.queuebuf_to_packetbuf
-                0x0000f4ba       0x32 contiki-wismote.a(queuebuf.o)
-                0x0000f4ba                queuebuf_to_packetbuf
+                0x0000f436       0x32 contiki-wismote.a(queuebuf.o)
+                0x0000f436                queuebuf_to_packetbuf
  .any.text.create_frame.isra.0
-                0x0000f4ec      0x104 contiki-wismote.a(framer-802154.o)
+                0x0000f468      0x104 contiki-wismote.a(framer-802154.o)
  .any.text.create
-                0x0000f5f0        0x8 contiki-wismote.a(framer-802154.o)
+                0x0000f56c        0x8 contiki-wismote.a(framer-802154.o)
  .any.text.hdr_length
-                0x0000f5f8        0x8 contiki-wismote.a(framer-802154.o)
+                0x0000f574        0x8 contiki-wismote.a(framer-802154.o)
  .any.text.parse
-                0x0000f600       0xa2 contiki-wismote.a(framer-802154.o)
+                0x0000f57c       0xa2 contiki-wismote.a(framer-802154.o)
  .any.text.framer_canonical_create_and_secure
-                0x0000f6a2       0x20 contiki-wismote.a(framer.o)
-                0x0000f6a2                framer_canonical_create_and_secure
+                0x0000f61e       0x20 contiki-wismote.a(framer.o)
+                0x0000f61e                framer_canonical_create_and_secure
  .any.text.send_packet
-                0x0000f6c2        0x6 contiki-wismote.a(nullmac.o)
+                0x0000f63e        0x6 contiki-wismote.a(nullmac.o)
  .any.text.packet_input
-                0x0000f6c8        0x6 contiki-wismote.a(nullmac.o)
- .any.text.on   0x0000f6ce        0x6 contiki-wismote.a(nullmac.o)
- .any.text.off  0x0000f6d4        0x6 contiki-wismote.a(nullmac.o)
+                0x0000f644        0x6 contiki-wismote.a(nullmac.o)
+ .any.text.on   0x0000f64a        0x6 contiki-wismote.a(nullmac.o)
+ .any.text.off  0x0000f650        0x6 contiki-wismote.a(nullmac.o)
  .any.text.channel_check_interval
-                0x0000f6da        0x4 contiki-wismote.a(nullmac.o)
+                0x0000f656        0x4 contiki-wismote.a(nullmac.o)
  .any.text.init
-                0x0000f6de        0x2 contiki-wismote.a(nullmac.o)
- .any.text.on   0x0000f6e0        0x6 contiki-wismote.a(nullrdc.o)
+                0x0000f65a        0x2 contiki-wismote.a(nullmac.o)
+ .any.text.on   0x0000f65c        0x6 contiki-wismote.a(nullrdc.o)
  .any.text.channel_check_interval
-                0x0000f6e6        0x4 contiki-wismote.a(nullrdc.o)
+                0x0000f662        0x4 contiki-wismote.a(nullrdc.o)
  .any.text.init
-                0x0000f6ea        0x6 contiki-wismote.a(nullrdc.o)
- .any.text.off  0x0000f6f0       0x10 contiki-wismote.a(nullrdc.o)
+                0x0000f666        0x6 contiki-wismote.a(nullrdc.o)
+ .any.text.off  0x0000f66c       0x10 contiki-wismote.a(nullrdc.o)
  .any.text.packet_input
-                0x0000f700       0x40 contiki-wismote.a(nullrdc.o)
+                0x0000f67c       0x40 contiki-wismote.a(nullrdc.o)
  .any.text.send_one_packet
-                0x0000f740      0x114 contiki-wismote.a(nullrdc.o)
+                0x0000f6bc      0x114 contiki-wismote.a(nullrdc.o)
  .any.text.send_list
-                0x0000f854       0x28 contiki-wismote.a(nullrdc.o)
+                0x0000f7d0       0x28 contiki-wismote.a(nullrdc.o)
  .any.text.send_packet
-                0x0000f87c        0x6 contiki-wismote.a(nullrdc.o)
+                0x0000f7f8        0x6 contiki-wismote.a(nullrdc.o)
  .any.text.bootstrap
-                0x0000f882        0x4 contiki-wismote.a(nullsec.o)
+                0x0000f7fe        0x4 contiki-wismote.a(nullsec.o)
  .any.text.send
-                0x0000f886        0xa contiki-wismote.a(nullsec.o)
+                0x0000f802        0xa contiki-wismote.a(nullsec.o)
  .any.text.on_frame_created
-                0x0000f890        0x4 contiki-wismote.a(nullsec.o)
+                0x0000f80c        0x4 contiki-wismote.a(nullsec.o)
  .any.text.input
-                0x0000f894        0x6 contiki-wismote.a(nullsec.o)
+                0x0000f810        0x6 contiki-wismote.a(nullsec.o)
  .any.text.get_overhead
-                0x0000f89a        0x4 contiki-wismote.a(nullsec.o)
+                0x0000f816        0x4 contiki-wismote.a(nullsec.o)
  .any.text.spi_init
-                0x0000f89e       0x32 contiki-wismote.a(spi.o)
-                0x0000f89e                spi_init
+                0x0000f81a       0x32 contiki-wismote.a(spi.o)
+                0x0000f81a                spi_init
  .any.text.stimer_set
-                0x0000f8d0       0x1c contiki-wismote.a(stimer.o)
-                0x0000f8d0                stimer_set
+                0x0000f84c       0x1c contiki-wismote.a(stimer.o)
+                0x0000f84c                stimer_set
  .any.text.stimer_expired
-                0x0000f8ec       0x30 contiki-wismote.a(stimer.o)
-                0x0000f8ec                stimer_expired
+                0x0000f868       0x30 contiki-wismote.a(stimer.o)
+                0x0000f868                stimer_expired
  .any.text.memb_init
-                0x0000f91c       0x36 contiki-wismote.a(memb.o)
-                0x0000f91c                memb_init
+                0x0000f898       0x36 contiki-wismote.a(memb.o)
+                0x0000f898                memb_init
  .any.text.memb_alloc
-                0x0000f952       0x3e contiki-wismote.a(memb.o)
-                0x0000f952                memb_alloc
+                0x0000f8ce       0x3e contiki-wismote.a(memb.o)
+                0x0000f8ce                memb_alloc
  .any.text.memb_free
-                0x0000f990       0x3a contiki-wismote.a(memb.o)
-                0x0000f990                memb_free
+                0x0000f90c       0x3a contiki-wismote.a(memb.o)
+                0x0000f90c                memb_free
  .any.text.memb_inmemb
-                0x0000f9ca       0x2a contiki-wismote.a(memb.o)
-                0x0000f9ca                memb_inmemb
+                0x0000f946       0x2a contiki-wismote.a(memb.o)
+                0x0000f946                memb_inmemb
  .any.text.memb_numfree
-                0x0000f9f4       0x26 contiki-wismote.a(memb.o)
-                0x0000f9f4                memb_numfree
+                0x0000f970       0x26 contiki-wismote.a(memb.o)
+                0x0000f970                memb_numfree
  .any.text.random_rand
-                0x0000fa1a        0x6 contiki-wismote.a(random.o)
-                0x0000fa1a                random_rand
+                0x0000f996        0x6 contiki-wismote.a(random.o)
+                0x0000f996                random_rand
  .any.text.field_len
-                0x0000fa20       0x8c contiki-wismote.a(frame802154.o)
+                0x0000f99c       0x8c contiki-wismote.a(frame802154.o)
  .any.text.frame802154_hdrlen
-                0x0000faac       0x2e contiki-wismote.a(frame802154.o)
-                0x0000faac                frame802154_hdrlen
+                0x0000fa28       0x2e contiki-wismote.a(frame802154.o)
+                0x0000fa28                frame802154_hdrlen
  .any.text.mac_call_sent_callback
-                0x0000fada       0x14 contiki-wismote.a(mac.o)
-                0x0000fada                mac_call_sent_callback
+                0x0000fa56       0x14 contiki-wismote.a(mac.o)
+                0x0000fa56                mac_call_sent_callback
  .any.text.mac_sequence_is_duplicate
-                0x0000faee       0x3c contiki-wismote.a(mac-sequence.o)
-                0x0000faee                mac_sequence_is_duplicate
+                0x0000fa6a       0x3c contiki-wismote.a(mac-sequence.o)
+                0x0000fa6a                mac_sequence_is_duplicate
+ .any.text.mac_sequence_register_seqno
+                0x0000faa6       0x6a contiki-wismote.a(mac-sequence.o)
+                0x0000faa6                mac_sequence_register_seqno
 
-.rodata         0x0000fb2c      0x321
-                0x0000fb2c                . = ALIGN (0x2)
+.rodata         0x0000fb10      0x321
+                0x0000fb10                . = ALIGN (0x2)
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.benchmark_parse_control
-                0x0000fb2c        0x6 server.co
+                0x0000fb10        0x6 server.co
  .rodata.process_thread_udp_server_process
-                0x0000fb32       0x31 server.co
- *fill*         0x0000fb63        0x1 00
+                0x0000fb16       0x2f server.co
+ *fill*         0x0000fb45        0x1 00
  .rodata.autostart_processes
-                0x0000fb64        0x4 server.co
-                0x0000fb64                autostart_processes
- .rodata        0x0000fb68       0x13 server.co
- .rodata        0x0000fb7b      0x119 obj_wismote/contiki-wismote-main.o
- .rodata        0x0000fc94        0x7 contiki-wismote.a(button-sensor.o)
- *fill*         0x0000fc9b        0x1 00
+                0x0000fb46        0x4 server.co
+                0x0000fb46                autostart_processes
+ .rodata        0x0000fb4a       0x13 server.co
+ .rodata        0x0000fb5d      0x119 obj_wismote/contiki-wismote-main.o
+ .rodata        0x0000fc76        0x7 contiki-wismote.a(button-sensor.o)
+ *fill*         0x0000fc7d        0x1 00
  .rodata.button_sensor
-                0x0000fc9c        0xe contiki-wismote.a(button-sensor.o)
-                0x0000fc9c                button_sensor
- .rodata        0x0000fcaa        0x8 contiki-wismote.a(sensors.o)
+                0x0000fc7e        0xe contiki-wismote.a(button-sensor.o)
+                0x0000fc7e                button_sensor
+ .rodata        0x0000fc8c        0x8 contiki-wismote.a(sensors.o)
  .rodata.cc2520_driver
-                0x0000fcb2       0x38 contiki-wismote.a(cc2520.o)
-                0x0000fcb2                cc2520_driver
- .rodata        0x0000fcea        0xe contiki-wismote.a(cc2520.o)
- .rodata        0x0000fcf8        0xf contiki-wismote.a(ctimer.o)
- .rodata        0x0000fd07        0xc contiki-wismote.a(etimer.o)
- .rodata        0x0000fd13        0xe contiki-wismote.a(serial-line.o)
- .rodata        0x0000fd21        0xb contiki-wismote.a(sicslowpan.o)
+                0x0000fc94       0x38 contiki-wismote.a(cc2520.o)
+                0x0000fc94                cc2520_driver
+ .rodata        0x0000fccc        0xe contiki-wismote.a(cc2520.o)
+ .rodata        0x0000fcda        0xf contiki-wismote.a(ctimer.o)
+ .rodata        0x0000fce9        0xc contiki-wismote.a(etimer.o)
+ .rodata        0x0000fcf5        0xe contiki-wismote.a(serial-line.o)
+ .rodata        0x0000fd03        0xb contiki-wismote.a(sicslowpan.o)
  .rodata.sicslowpan_driver
-                0x0000fd2c        0xa contiki-wismote.a(sicslowpan.o)
-                0x0000fd2c                sicslowpan_driver
+                0x0000fd0e        0xa contiki-wismote.a(sicslowpan.o)
+                0x0000fd0e                sicslowpan_driver
  .rodata.llprefix
-                0x0000fd36        0x2 contiki-wismote.a(sicslowpan.o)
-                0x0000fd36                llprefix
+                0x0000fd18        0x2 contiki-wismote.a(sicslowpan.o)
+                0x0000fd18                llprefix
  .rodata.unc_mxconf
-                0x0000fd38        0x4 contiki-wismote.a(sicslowpan.o)
-                0x0000fd38                unc_mxconf
+                0x0000fd1a        0x4 contiki-wismote.a(sicslowpan.o)
+                0x0000fd1a                unc_mxconf
  .rodata.unc_ctxconf
-                0x0000fd3c        0x4 contiki-wismote.a(sicslowpan.o)
-                0x0000fd3c                unc_ctxconf
+                0x0000fd1e        0x4 contiki-wismote.a(sicslowpan.o)
+                0x0000fd1e                unc_ctxconf
  .rodata.unc_llconf
-                0x0000fd40        0x4 contiki-wismote.a(sicslowpan.o)
-                0x0000fd40                unc_llconf
+                0x0000fd22        0x4 contiki-wismote.a(sicslowpan.o)
+                0x0000fd22                unc_llconf
  .rodata.ttl_values
-                0x0000fd44        0x4 contiki-wismote.a(sicslowpan.o)
+                0x0000fd26        0x4 contiki-wismote.a(sicslowpan.o)
+ *fill*         0x0000fd2a        0x2 00
  .rodata.uip_process
-                0x0000fd48       0x40 contiki-wismote.a(uip6.o)
+                0x0000fd2c       0x40 contiki-wismote.a(uip6.o)
  .rodata.uip_ds6_defrt_add
-                0x0000fd88       0x1c contiki-wismote.a(uip-ds6-route.o)
- .rodata        0x0000fda4        0xd contiki-wismote.a(tcpip.o)
+                0x0000fd6c       0x1c contiki-wismote.a(uip-ds6-route.o)
+ .rodata        0x0000fd88        0xd contiki-wismote.a(tcpip.o)
  .rodata.uip_debug_ipaddr_print
-                0x0000fdb1       0x15 contiki-wismote.a(uip-debug.o)
+                0x0000fd95       0x15 contiki-wismote.a(uip-debug.o)
  .rodata.linkaddr_null
-                0x0000fdc6        0x8 contiki-wismote.a(linkaddr.o)
-                0x0000fdc6                linkaddr_null
+                0x0000fdaa        0x8 contiki-wismote.a(linkaddr.o)
+                0x0000fdaa                linkaddr_null
  .rodata.framer_802154
-                0x0000fdce       0x10 contiki-wismote.a(framer-802154.o)
-                0x0000fdce                framer_802154
- .rodata        0x0000fdde        0x8 contiki-wismote.a(nullmac.o)
+                0x0000fdb2       0x10 contiki-wismote.a(framer-802154.o)
+                0x0000fdb2                framer_802154
+ .rodata        0x0000fdc2        0x8 contiki-wismote.a(nullmac.o)
  .rodata.nullmac_driver
-                0x0000fde6       0x1a contiki-wismote.a(nullmac.o)
-                0x0000fde6                nullmac_driver
- .rodata        0x0000fe00        0x8 contiki-wismote.a(nullrdc.o)
+                0x0000fdca       0x1a contiki-wismote.a(nullmac.o)
+                0x0000fdca                nullmac_driver
+ .rodata        0x0000fde4        0x8 contiki-wismote.a(nullrdc.o)
  .rodata.nullrdc_driver
-                0x0000fe08       0x1e contiki-wismote.a(nullrdc.o)
-                0x0000fe08                nullrdc_driver
- .rodata        0x0000fe26        0x8 contiki-wismote.a(nullsec.o)
+                0x0000fdec       0x1e contiki-wismote.a(nullrdc.o)
+                0x0000fdec                nullrdc_driver
+ .rodata        0x0000fe0a        0x8 contiki-wismote.a(nullsec.o)
  .rodata.nullsec_driver
-                0x0000fe2e       0x16 contiki-wismote.a(nullsec.o)
-                0x0000fe2e                nullsec_driver
+                0x0000fe12       0x16 contiki-wismote.a(nullsec.o)
+                0x0000fe12                nullsec_driver
  .rodata.CSWTCH.5
-                0x0000fe44        0x2 contiki-wismote.a(frame802154.o)
+                0x0000fe28        0x2 contiki-wismote.a(frame802154.o)
  .rodata.vuprintf
-                0x0000fe46        0x7 /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/../../../../msp430/lib/mcpu-430x/mmpy-16/msr20/mc20/libc.a(vuprintf.o)
+                0x0000fe2a        0x7 /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/../../../../msp430/lib/mcpu-430x/mmpy-16/msr20/mc20/libc.a(vuprintf.o)
  *(.near.rodata .near.rodata.*)
-                0x0000fe4e                . = ALIGN (0x2)
-                0x0000fe4e                _etext = .
+                0x0000fe32                . = ALIGN (0x2)
+                0x0000fe32                _etext = .
 
-.data           0x00001c00      0x110 load address 0x0000fe4e
+.data           0x00001c00      0x110 load address 0x0000fe32
                 0x00001c00                . = ALIGN (0x2)
                 0x00001c00                __data_start = .
  *(.data .data.* .gnu.linkonce.d.*)
@@ -2611,9 +2612,8 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
                 0x00001cca        0x8 contiki-wismote.a(rpl-icmp6.o)
  .data.dao_ack_handler
                 0x00001cd2        0x8 contiki-wismote.a(rpl-icmp6.o)
- .data.rpl_mrhof
-                0x00001cda       0x1a contiki-wismote.a(rpl-mrhof.o)
-                0x00001cda                rpl_mrhof
+ .data.rpl_of0  0x00001cda       0x1a contiki-wismote.a(rpl-of0.o)
+                0x00001cda                rpl_of0
  .data.neighbor_addr_mem
                 0x00001cf4        0x8 contiki-wismote.a(nbr-table.o)
  .data.buframmem
@@ -2623,10 +2623,10 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
  *(.near.data .near.data.*)
                 0x00001d10                . = ALIGN (0x2)
                 0x00001d10                _edata = .
-                0x0000fe4e                __data_load_start = LOADADDR (.data)
+                0x0000fe32                __data_load_start = LOADADDR (.data)
                 0x00000110                __data_size = SIZEOF (.data)
 
-.bss            0x00001d10     0x202c load address 0x0000ff5e
+.bss            0x00001d10     0x202c load address 0x0000ff42
                 0x00001d10                __bss_start = .
  *(.bss .bss.*)
  .bss.server_conn
@@ -2936,7 +2936,7 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
                 0x00003d3c                __bss_end = .
                 0x0000202c                __bss_size = SIZEOF (.bss)
 
-.noinit         0x00003d3c        0x2 load address 0x0000ff5e
+.noinit         0x00003d3c        0x2 load address 0x0000ff42
                 0x00003d3c                . = ALIGN (0x2)
                 0x00003d3c                __noinit_start = .
  *(.noinit .noinit.*)
@@ -2982,7 +2982,7 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
                 0x00010000                . = ALIGN (0x2)
  *(.fartext .fartext.*)
 
-.far.text       0x00010000      0x2e8
+.far.text       0x00010000      0x27e
                 0x00010000                . = ALIGN (0x2)
  *(.far.text .far.text.*)
  .any.text.frame802154_create
@@ -2991,26 +2991,23 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
  .any.text.frame802154_parse
                 0x00010112      0x16c contiki-wismote.a(frame802154.o)
                 0x00010112                frame802154_parse
- .any.text.mac_sequence_register_seqno
-                0x0001027e       0x6a contiki-wismote.a(mac-sequence.o)
-                0x0001027e                mac_sequence_register_seqno
 
-.far.rodata     0x000102e8        0x0
-                0x000102e8                . = ALIGN (0x2)
+.far.rodata     0x0001027e        0x0
+                0x0001027e                . = ALIGN (0x2)
  *(.far.rodata .far.rodata.*)
-                0x000102e8                . = ALIGN (0x2)
-                0x000102e8                _efartext = .
+                0x0001027e                . = ALIGN (0x2)
+                0x0001027e                _efartext = .
 
-.far.data       0x00000000        0x0 load address 0x000102e8
+.far.data       0x00000000        0x0 load address 0x0001027e
                 0x00000000                . = ALIGN (0x2)
                 0x00000000                __far_data_start = .
  *(.far.data .far.data.*)
                 0x00000000                . = ALIGN (0x2)
                 0x00000000                _efardata = .
-                0x000102e8                __far_data_load_start = LOADADDR (.far.data)
+                0x0001027e                __far_data_load_start = LOADADDR (.far.data)
                 0x00000000                __far_data_size = SIZEOF (.far.data)
 
-.far.bss        0x00000000        0x0 load address 0x000102e8
+.far.bss        0x00000000        0x0 load address 0x0001027e
                 0x00000000                . = ALIGN (0x2)
                 0x00000000                __far_bss_start = .
  *(.far.bss .far.bss.*)
@@ -3023,7 +3020,7 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
 .profiler
  *(.profiler)
 
-.stab           0x00000000    0x26238
+.stab           0x00000000    0x26058
  *(.stab)
  .stab          0x00000000     0x1c80 server.co
  .stab          0x00001c80     0x10f8 obj_wismote/contiki-wismote-main.o
@@ -3102,46 +3099,46 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
                                0x1860 (size before relaxing)
  .stab          0x0001c608     0x177c contiki-wismote.a(rpl-icmp6.o)
                                0x25b0 (size before relaxing)
- .stab          0x0001dd84      0x894 contiki-wismote.a(rpl-mrhof.o)
-                               0x15b4 (size before relaxing)
- .stab          0x0001e618      0xbdc contiki-wismote.a(rpl-timers.o)
+ .stab          0x0001dd84      0x6b4 contiki-wismote.a(rpl-of0.o)
+                               0x13d4 (size before relaxing)
+ .stab          0x0001e438      0xbdc contiki-wismote.a(rpl-timers.o)
                                0x18fc (size before relaxing)
- .stab          0x0001f1f4      0x2ac contiki-wismote.a(linkaddr.o)
+ .stab          0x0001f014      0x2ac contiki-wismote.a(linkaddr.o)
                                 0x6c0 (size before relaxing)
- .stab          0x0001f4a0      0xe58 contiki-wismote.a(nbr-table.o)
+ .stab          0x0001f2c0      0xe58 contiki-wismote.a(nbr-table.o)
                                0x1518 (size before relaxing)
- .stab          0x000202f8      0xd74 contiki-wismote.a(packetbuf.o)
+ .stab          0x00020118      0xd74 contiki-wismote.a(packetbuf.o)
                                0x1eb4 (size before relaxing)
- .stab          0x0002106c      0xa80 contiki-wismote.a(queuebuf.o)
+ .stab          0x00020e8c      0xa80 contiki-wismote.a(queuebuf.o)
                                0x1ba8 (size before relaxing)
- .stab          0x00021aec      0x924 contiki-wismote.a(framer-802154.o)
+ .stab          0x0002190c      0x924 contiki-wismote.a(framer-802154.o)
                                 0xf60 (size before relaxing)
- .stab          0x00022410      0x3fc contiki-wismote.a(framer.o)
+ .stab          0x00022230      0x3fc contiki-wismote.a(framer.o)
                                 0xc6c (size before relaxing)
- .stab          0x0002280c      0x948 contiki-wismote.a(nullmac.o)
+ .stab          0x0002262c      0x948 contiki-wismote.a(nullmac.o)
                                 0xdc8 (size before relaxing)
- .stab          0x00023154      0xb4c contiki-wismote.a(nullrdc.o)
+ .stab          0x00022f74      0xb4c contiki-wismote.a(nullrdc.o)
                                0x12b4 (size before relaxing)
- .stab          0x00023ca0      0x648 contiki-wismote.a(nullsec.o)
+ .stab          0x00023ac0      0x648 contiki-wismote.a(nullsec.o)
                                 0xd98 (size before relaxing)
- .stab          0x000242e8      0x27c contiki-wismote.a(spi.o)
+ .stab          0x00024108      0x27c contiki-wismote.a(spi.o)
                                 0x5e8 (size before relaxing)
- .stab          0x00024564      0x3b4 contiki-wismote.a(stimer.o)
+ .stab          0x00024384      0x3b4 contiki-wismote.a(stimer.o)
                                 0x60c (size before relaxing)
- .stab          0x00024918      0x5c4 contiki-wismote.a(memb.o)
+ .stab          0x00024738      0x5c4 contiki-wismote.a(memb.o)
                                 0xb10 (size before relaxing)
- .stab          0x00024edc      0x21c contiki-wismote.a(random.o)
+ .stab          0x00024cfc      0x21c contiki-wismote.a(random.o)
                                 0x630 (size before relaxing)
- .stab          0x000250f8      0x8f4 contiki-wismote.a(frame802154.o)
+ .stab          0x00024f18      0x8f4 contiki-wismote.a(frame802154.o)
                                0x10e0 (size before relaxing)
- .stab          0x000259ec      0x1f8 contiki-wismote.a(mac.o)
+ .stab          0x0002580c      0x1f8 contiki-wismote.a(mac.o)
                                 0x504 (size before relaxing)
- .stab          0x00025be4      0x654 contiki-wismote.a(mac-sequence.o)
+ .stab          0x00025a04      0x654 contiki-wismote.a(mac-sequence.o)
                                0x1794 (size before relaxing)
 
-.stabstr        0x00000000    0x1b9d3
+.stabstr        0x00000000    0x1b941
  *(.stabstr)
- .stabstr       0x00000000    0x1b9d3 server.co
+ .stabstr       0x00000000    0x1b941 server.co
 
 .stab.excl
  *(.stab.excl)
@@ -3197,7 +3194,7 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
  .comment       0x00000000       0x31 contiki-wismote.a(rpl-dag.o)
  .comment       0x00000000       0x31 contiki-wismote.a(rpl-ext-header.)
  .comment       0x00000000       0x31 contiki-wismote.a(rpl-icmp6.o)
- .comment       0x00000000       0x31 contiki-wismote.a(rpl-mrhof.o)
+ .comment       0x00000000       0x31 contiki-wismote.a(rpl-of0.o)
  .comment       0x00000000       0x31 contiki-wismote.a(rpl-timers.o)
  .comment       0x00000000       0x31 contiki-wismote.a(linkaddr.o)
  .comment       0x00000000       0x31 contiki-wismote.a(nbr-table.o)
@@ -3421,8 +3418,8 @@ LOAD /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/mcpu-430x/mmpy-16/msr20/mc20/
  .debug_ranges  0x000000c0       0x10 /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/../../../../msp430/lib/mcpu-430x/mmpy-16/msr20/mc20/libc.a(memmove.o)
  .debug_ranges  0x000000d0       0x10 /usr/local/msp430/bin/../lib/gcc/msp430/4.7.0/../../../../msp430/lib/mcpu-430x/mmpy-16/msr20/mc20/libc.a(memset.o)
                 0x00005c00                PROVIDE (__stack, (ORIGIN (ram) + 0x4000))
-                0x0000fe4e                __data_start_rom = _etext
-                0x0000ff5e                __data_end_rom = (_etext + SIZEOF (.data))
+                0x0000fe32                __data_start_rom = _etext
+                0x0000ff42                __data_end_rom = (_etext + SIZEOF (.data))
 OUTPUT(server.wismote elf32-msp430)
 
 .gnu.attributes
@@ -3508,7 +3505,7 @@ OUTPUT(server.wismote elf32-msp430)
  .gnu.attributes
                 0x00000297       0x11 contiki-wismote.a(rpl-icmp6.o)
  .gnu.attributes
-                0x000002a8       0x11 contiki-wismote.a(rpl-mrhof.o)
+                0x000002a8       0x11 contiki-wismote.a(rpl-of0.o)
  .gnu.attributes
                 0x000002b9       0x11 contiki-wismote.a(rpl-timers.o)
  .gnu.attributes
