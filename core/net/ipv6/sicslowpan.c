@@ -1191,7 +1191,7 @@ static void
 uncompress_hdr_hc1(uint16_t ip_len)
 {
   /* version, traffic class, flow label */
-  SICSLOWPAN_IP_BUF->vtc = 0x60;uncomp_hdr_len
+  SICSLOWPAN_IP_BUF->vtc = 0x60;
   SICSLOWPAN_IP_BUF->tcflow = 0;
   SICSLOWPAN_IP_BUF->flow = 0;
   

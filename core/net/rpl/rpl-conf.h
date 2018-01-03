@@ -69,6 +69,8 @@
 /* ETX is the default objective function. */
 #define OF_IS_MRHOF	0
 #if OF_IS_MRHOF == 1
+#undef RPL_DAG_MC
+#define RPL_DAG_MC RPL_DAG_MC_ETX
 #define RPL_OF rpl_mrhof
 #else
 #define RPL_OF rpl_of0 // rpl_mrhof
