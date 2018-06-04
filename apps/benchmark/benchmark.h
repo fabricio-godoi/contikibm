@@ -198,6 +198,10 @@ struct netstat_t
 
 };
 
+
+#define NODESTAT // this enable the macros
+#ifdef NODESTAT
+
 #define NODESTAT_ENABLE()   do{ extern char NodeStat_Ctrl; NodeStat_Ctrl=1;} while(0);
 #define NODESTAT_DISABLE()	do{ extern char NodeStat_Ctrl; NodeStat_Ctrl=0;} while(0);
 #define NODESTAT_RESET() 	do{ extern struct netstat_t UNET_NodeStat; memset(&UNET_NodeStat, 0x00, sizeof(UNET_NodeStat));} while (0);
@@ -220,6 +224,14 @@ struct netstat_t
 							}while(0);
 
 
+#else
+#define NODESTAT_ENABLE()
+#define NODESTAT_DISABLE()
+#define NODESTAT_RESET()
+#define NODESTAT_CHECK(x)
+#define NODESTAT_UPDATE(x)
+#define NODESTAT_ADD(x,y)
+#endif // NODESTAT
 
 
 #endif /* BENCHMARK_H_ */
