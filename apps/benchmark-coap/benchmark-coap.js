@@ -71,21 +71,21 @@ var buffer_clean_delay = 60000; // wait ten seconds to ensure that the buffer is
 
 //! Do not need in CoAP
 // This delay is used to ensure that the previous simulation run has ended
-var delay_between_runs = 0; // wait two seconds to run another simulation
+var delay_between_runs = 10000; // wait two seconds to run another simulation
 
 //Number of packets by each mote
 var bm_packets = 100;	// value should not exceed 127
 
 // Transmission start interval in ms
-var bm_interval = 10000; // Use a value to start each mote in CoAP
+var bm_interval = 16000; // Use a value to start each mote in CoAP
 
 //! Do not need in CoAP
 //Transmission interval decrease value rate is ms
-var bm_interval_dec = bm_interval; // Time doesn't matter in CoAP
+var bm_interval_dec = 3000; // Time doesn't matter in CoAP
 
 //! Do not need in CoAP
 // Minimum interval value acceptable in ms
-var bm_min_interval = bm_interval; // Time doesn't matter in CoAP
+var bm_min_interval = 1000; // Time doesn't matter in CoAP
 
 // Statistcs variables
 var motes_statistics = "UNET_NodeStat";
