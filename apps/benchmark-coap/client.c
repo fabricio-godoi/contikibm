@@ -261,33 +261,16 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 	set_global_address();
 	print_local_addresses();
 
-//	/* new connection with remote host */
-//	client_conn = udp_new(NULL, UIP_HTONS(UDP_SERVER_PORT), NULL);
-//	if (client_conn == NULL) {
-//		BM_PRINTF("No UDP connection available, exiting the process!\n");
-//		PROCESS_EXIT();
-//	}
-//	udp_bind(client_conn, UIP_HTONS(UDP_CLIENT_PORT));
-
 	/**
 	 * Configure CoAP
 	 */
 
-//	SERVER_NODE(&server_ipaddr);
-
 	/* receives all CoAP messages */
 	coap_init_engine();
-
-	//	  etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
 
 	/**
 	 * Configure the Benchmark
 	 */
-
-//	BM_PRINTF("Created a connection with the server ");
-//	BM_PRINTF_ADDR64(&client_conn->ripaddr);
-//	BM_PRINTF(" local/remote port %u/%u\n", UIP_HTONS(client_conn->lport),
-//			UIP_HTONS(client_conn->rport));
 
 #if WITH_COMPOWER
 	powertrace_sniff(POWERTRACE_ON);
@@ -296,11 +279,9 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 
 	// Get the observer the number of nodes
 	PROCESS_YIELD_UNTIL(ev == serial_line_event_message);
-//	bm_ctrl.ctrl = ((uint8_t *) data)[0];
 	benchmark_parse_control((uint8_t *) data);
 	if(bm_ctrl.c.set) bm_num_of_nodes = ((uint8_t *) data)[1];
 
-//	send_interval = (clock_time_t) bm_num_of_nodes * (BENCHMARK_INTERVAL);
 	send_time = (clock_time_t) (bm_num_of_nodes - node_id) * (bm_interval/bm_num_of_nodes);
 
 	// Wait until the a route was found
@@ -315,40 +296,11 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 	// Wait observe response to actually initiate the process
 	printf(BENCHMARK_CLIENT_CONNECTED);
 
-
-/// START COAP DEBUG
-//#define TOGGLE_INTERVAL 10
-//	etimer_set(&et, TOGGLE_INTERVAL * CLOCK_SECOND);
-
 	// 0- not sending ; 1 - is sending
 	char sending = 0;
 
 	while (1) {
 		PROCESS_YIELD();
-
-
-#if 0 // DEBUG_COAP
-		if(etimer_expired(&et)) {
-		      printf("--Toggle timer--\n");
-
-		      /* prepare request, TID is set by COAP_BLOCKING_REQUEST() */
-		      coap_init_message(request, COAP_TYPE_CON, COAP_POST, 0);
-		      coap_set_header_uri_path(request, service_urls[4]);
-
-		      const char msg[] = "Toggle!\0";
-
-//		      coap_set_payload(request, (uint8_t *)msg, sizeof(msg) - 1);
-			  coap_set_payload(request, &bm_packet, BM_PACKET_SIZE);
-
-		      COAP_BLOCKING_REQUEST(&server_ipaddr, REMOTE_PORT, request,
-		                            client_chunk_handler);
-
-		      printf("\n--Done--\n");
-
-		      etimer_reset(&et);
-		}
-#endif
-
 
 		if (ev == serial_line_event_message) {
 			benchmark_parse_control((uint8_t *) data);
@@ -361,6 +313,7 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 			}
 			// Just started
 			if(bm_en_comm){
+				if(send_time == 0)send_time = 1;
 				etimer_set(&periodic, (clock_time_t)((CLOCK_SECOND*send_time)/1000));
 			}
 			else{
@@ -369,13 +322,9 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 			}
 		}
 		else if(ev == PROCESS_EVENT_TIMER){
+#if 1
 			if(etimer_expired(&periodic)) {
 				etimer_stop(&periodic);
-				sending = 1;
-			}
-
-#if old
-			if(etimer_expired(&periodic)) {
 				bm_packet.tick = (uint32_t) clock_time() - stick;
 
 				/* prepare request, TID is set by COAP_BLOCKING_REQUEST() */
@@ -389,7 +338,6 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 				COAP_BLOCKING_REQUEST(&server_ipaddr, REMOTE_PORT, request,
 									  client_chunk_handler);
 
-
 				BM_PRINTF("benchmark: msg %d - tick %lu - clock %lu\n", bm_packet.msg_number, bm_packet.tick, stick);
 				bm_packet.msg_number++;
 
@@ -401,7 +349,13 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 				}
 				else etimer_set(&periodic,(clock_time_t)((CLOCK_SECOND*bm_interval)/1000));
 			}
-#endif
+		}
+
+#else
+			if(etimer_expired(&periodic)) {
+				etimer_stop(&periodic);
+				sending = 1;
+			}
 
 		}
 
@@ -440,6 +394,7 @@ PROCESS_THREAD(coap_udp_client_process, ev, data) {
 			etimer_stop(&periodic);
 		}
 
+#endif
 
 #if WITH_COMPOWER
 		if (print == 0) {
